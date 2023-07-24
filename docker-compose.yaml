@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: local.rabbitmq
+    image: bitnami/rabbitmq:latest
+    tty: true
+    env_file:
+      - ./env/rabbitmq.env
+
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+    volumes:
+      - ./rabbitmqstats_data:/bitnami/rabbitmq/mnesia
+
+    networks:
+      - dsi_server
+
+networks:
+  dsi_server:
+    driver: bridge
