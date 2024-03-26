@@ -1,48 +1,69 @@
 # docker_rabbitmq
-Estrutura de mensagem para brincar de processamento usando pub/sub, topicos com/sem filtro, bulk insert, consumers entre outros. Trabalhar com processamento assincrono.
-
-### Conceitos rapidos
-### exchange: 
-Faz a troca entre o publicador e as filas, ela que vai descobrir e interpretar a mensagem com/sem filtros para dar o direcionamento correto.
+Estrutura de mensagem para brincar de processamento usando mensageria.
 
 
+### exchange
 
 ### queue
-São filas que vão receber as mensagens com/sem parametros, ela pode ter um bind_key (filtro) que vira junto com a mensagem gerada pelo producer
 
-### producer
-Produz a mensagem ou mensagens em batch ( mensagens acumuladas em uma matriz )
+### entendimento do processo de configuração
 
-### consumer
-Quem vai consumir um topico
-
-<br>
-
-### Rabbit MQ Simulator
+## RabbitMQ - Simulator
 <a href="https://tryrabbitmq.com/" taget="_blank">https://tryrabbitmq.com/</a>
 
+## RabbitMQ - configurações via web
+```
+http://localhost:15672
+```
+```
+User: adm  
+Password: adm
+```
+
+## RabbitMQ - Estrutura de pastas
+```
+./docker_rabbitmq/
+    docker-compose.yaml  -> arquivo docker compose para subir o sistema
+    |_rabbitmq/
+        |_conf/          -> arquivo de configuração
+        |_dada/          -> persistencia
+        |_definitions/   -> arquivo .json com as pré-definições para exchange, queue, etc.
+        |_env/           -> environments
+```
+
+## RabbitMQ - dados de acesso
+Para atualizar os dados de acesso, altere o arquivo `./docker_rabbitmq/rabbitmq/difinitions/default.json`
+```
+"users": [
+    {
+        "name": "adm",
+        "password": "adm",
+        "tags": "administrator",
+        "rights": ".* .* .*"
+    },
+    {
+        "name": "another_user",
+        "password": "another_pass",
+        "tags": "administrator",
+        "rights": ".* .* .*"
+    }
+]
+```
+
+<br>
+<br>
 <br>
 
-### Exercicio do projeto/challange
-1. Criar uma estrutura de producers/consumers
-2. Usar o RabbitMQ como estrutura para pub/sub
-3. Acessar o endpoint final com os resultados esperados
 
 
 
 <br><br>
 ## Docker
-```
+comandos para subir o sistema e remover quando finalizar o uso.
+```docker
 docker compose -f "docker-compose.yaml" up -d --build --remove-orphans
 ```
-```
+```docker
 docker compose -f "docker-compose.yaml" down
 ```
 
-## configurações
-```
-http://localhost:15672
-```
-
-User: root  
-Password: root

@@ -1,0 +1,45 @@
+{
+    "users": [
+        {
+            "name": "adm",
+            "password": "adm",
+            "tags": "administrator",
+            "rights": ".* .* .*"
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/",
+            "tracing": false
+        }
+    ],
+    "permissions": [
+        {
+            "user": "adm",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "customers.direct",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "queues": [
+        {
+            "name": "customers.orders",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ]
+}
