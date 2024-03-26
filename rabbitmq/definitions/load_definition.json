@@ -2,15 +2,17 @@
     "users": [
         {
             "name": "adm",
-            "password": "adm",
-            "tags": "administrator",
-            "rights": ".* .* .*"
+            "password_hash": "Bcq1jhoiYBGe3REdLQW5z4ibQ4Sydo0aiJWAbKymwXB8+zlY",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": [
+                "administrator"
+            ],
+            "limits": {}
         }
     ],
     "vhosts": [
         {
-            "name": "/",
-            "tracing": false
+            "name": "/"
         }
     ],
     "permissions": [
@@ -22,29 +24,23 @@
             "read": ".*"
         }
     ],
-    "exchanges": [
+    "topic_permissions": [],
+    "parameters": [],
+    "global_parameters": [
         {
-            "name": "customers.direct",
-            "vhost": "/",
-            "type": "direct",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {
-                "x-dead-letter-exchange": "customers.direct.dlq"
-            }
-        },
-        {
-            "name": "customers.direct.dlq",
-            "vhost": "/",
-            "type": "direct",
-            "durable": true,
-            "auto_delete": false,
-            "internal": false,
-            "arguments": {}
+            "name": "internal_cluster_id",
+            "value": "rabbitmq-cluster-id-m3PUl2a4SNmUc4VXFfPCeA"
         }
     ],
+    "policies": [],
     "queues": [
+        {
+            "name": "customers.notifications.dlq",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
         {
             "name": "customers.orders",
             "vhost": "/",
@@ -63,6 +59,16 @@
             "arguments": {}
         },
         {
+            "name": "customers.notifications",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "customers.notifications.dlq",
+                "x-dead-letter-routing-key": "notifications-dlq"
+            }
+        },
+        {
             "name": "customers.offers",
             "vhost": "/",
             "durable": true,
@@ -78,32 +84,37 @@
             "durable": true,
             "auto_delete": false,
             "arguments": {}
-        },
+        }
+    ],
+    "exchanges": [
         {
-            "name": "customers.notifications",
+            "name": "customers.direct.dlq",
             "vhost": "/",
+            "type": "direct",
             "durable": true,
             "auto_delete": false,
-            "arguments": {
-                "x-dead-letter-exchange": "customers.notifications.dlq",
-                "x-dead-letter-routing-key": "notifications-dlq"
-            }
-        },
-        {
-            "name": "customers.notifications.dlq",
-            "vhost": "/",
-            "durable": true,
-            "auto_delete": false,
+            "internal": false,
             "arguments": {}
+        },
+        {
+            "name": "customers.direct",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {
+                "x-dead-letter-exchange": "customers.direct.dlq"
+            }
         }
     ],
     "bindings": [
         {
             "source": "customers.direct",
             "vhost": "/",
-            "destination": "customers.orders",
+            "destination": "customers.notifications",
             "destination_type": "queue",
-            "routing_key": "orders",
+            "routing_key": "notifications",
             "arguments": {}
         },
         {
@@ -117,17 +128,17 @@
         {
             "source": "customers.direct",
             "vhost": "/",
-            "destination": "customers.notifications",
+            "destination": "customers.orders",
             "destination_type": "queue",
-            "routing_key": "notifications",
+            "routing_key": "orders",
             "arguments": {}
         },
         {
             "source": "customers.direct.dlq",
             "vhost": "/",
-            "destination": "customers.orders.dlq",
+            "destination": "customers.notifications.dlq",
             "destination_type": "queue",
-            "routing_key": "orders-dlq",
+            "routing_key": "notifications-dlq",
             "arguments": {}
         },
         {
@@ -141,9 +152,9 @@
         {
             "source": "customers.direct.dlq",
             "vhost": "/",
-            "destination": "customers.notifications.dlq",
+            "destination": "customers.orders.dlq",
             "destination_type": "queue",
-            "routing_key": "notifications-dlq",
+            "routing_key": "orders-dlq",
             "arguments": {}
         }
     ]

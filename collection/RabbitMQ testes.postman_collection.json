@@ -1,0 +1,237 @@
+{
+	"info": {
+		"_postman_id": "e7dcce80-2829-4e98-84c6-b2660fe242cc",
+		"name": "RabbitMQ testes",
+		"description": "[http://localhost:15672/api/index.html](http://localhost:15672/api/index.html)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "151044"
+	},
+	"item": [
+		{
+			"name": "rabbitMQ",
+			"item": [
+				{
+					"name": "/api/vhosts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"status\":\"entregue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:15672/api/vhosts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"vhosts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/channels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15672/api/channels",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"channels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/exchanges",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15672/api/exchanges",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"exchanges"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/consumers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:15672/api//consumers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"",
+								"consumers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/queues",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15672/api/queues",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"queues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:15672/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/exchanges/customers.direct/publish",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"properties\": {},\r\n    \"routing_key\": \"orders\",\r\n    \"payload\": \"{\\\"data\\\":{\\\"name\\\":\\\"porra toda\\\"}}\",\r\n    \"payload_encoding\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:15672/api/exchanges/%2F/customers.direct/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "15672",
+							"path": [
+								"api",
+								"exchanges",
+								"%2F",
+								"customers.direct",
+								"publish"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "[http://localhost:15672/api/index.html](http://localhost:15672/api/index.html)",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "adm",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "adm",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
