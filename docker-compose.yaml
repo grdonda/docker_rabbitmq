@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: bitnami/rabbitmq
+    tty: true
+    env_file:
+      - ./rabbitmq/env/rabbitmq.env      
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      # se usar persistencia, os arquivos de definições não são carregados
+      # - ./rabbitmq/data:/bitnami/rabbitmq/mnesia      
+      - ./rabbitmq/definitions/load_definition.json:/app/load_definition.json
+      # - ./rabbitmq/conf/rabbitmq.conf:/opt/bitnami/rabbitmq/etc/rabbitmq/rabbitmq.conf
+    networks:
+      - rede
+
+networks:
+  rede:
+    driver: bridge
