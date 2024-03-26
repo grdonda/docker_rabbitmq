@@ -30,6 +30,17 @@
             "durable": true,
             "auto_delete": false,
             "internal": false,
+            "arguments": {
+                "x-dead-letter-exchange": "customers.direct.dlq"
+            }
+        },
+        {
+            "name": "customers.direct.dlq",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
             "arguments": {}
         }
     ],
@@ -39,6 +50,100 @@
             "vhost": "/",
             "durable": true,
             "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "customers.direct.dlq",
+                "x-dead-letter-routing-key": "orders-dlq"
+            }
+        },
+        {
+            "name": "customers.orders.dlq",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "customers.offers",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "customers.offers.dlq",
+                "x-dead-letter-routing-key": "offers-dlq"
+            }
+        },
+        {
+            "name": "customers.offers.dlq",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "customers.notifications",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "customers.notifications.dlq",
+                "x-dead-letter-routing-key": "notifications-dlq"
+            }
+        },
+        {
+            "name": "customers.notifications.dlq",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "customers.direct",
+            "vhost": "/",
+            "destination": "customers.orders",
+            "destination_type": "queue",
+            "routing_key": "orders",
+            "arguments": {}
+        },
+        {
+            "source": "customers.direct",
+            "vhost": "/",
+            "destination": "customers.offers",
+            "destination_type": "queue",
+            "routing_key": "offers",
+            "arguments": {}
+        },
+        {
+            "source": "customers.direct",
+            "vhost": "/",
+            "destination": "customers.notifications",
+            "destination_type": "queue",
+            "routing_key": "notifications",
+            "arguments": {}
+        },
+        {
+            "source": "customers.direct.dlq",
+            "vhost": "/",
+            "destination": "customers.orders.dlq",
+            "destination_type": "queue",
+            "routing_key": "orders-dlq",
+            "arguments": {}
+        },
+        {
+            "source": "customers.direct.dlq",
+            "vhost": "/",
+            "destination": "customers.offers.dlq",
+            "destination_type": "queue",
+            "routing_key": "offers-dlq",
+            "arguments": {}
+        },
+        {
+            "source": "customers.direct.dlq",
+            "vhost": "/",
+            "destination": "customers.notifications.dlq",
+            "destination_type": "queue",
+            "routing_key": "notifications-dlq",
             "arguments": {}
         }
     ]
